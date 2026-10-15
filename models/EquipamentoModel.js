@@ -1,6 +1,6 @@
 export class EquipamentoModel {
 
-static #bancoFalso = [];
+  bancoFalso = [];
 
   constructor(tagPatrimonio, tipoEquipamento, capacidadeRam) {
   this.tagPatrimonio = tagPatrimonio;
@@ -8,22 +8,20 @@ static #bancoFalso = [];
   this.capacidadeRam = capacidadeRam;
   }
 
-  static registrarAtivo(tagPatrimonio, tipoEquipamento, capacidadeRam) {
-  if (!tagPatrimonio || String(tagPatrimonio).trim() === "") {
-  throw new Error("A Tag de Patrimônio não pode ficar vazia.");
+  registrarAtivo(tagPatrimonio, tipoEquipamento, capacidadeRam) {
+    if (tagPatrimonio === "") {
+      throw new Error("A Tag de Patrimônio não pode ficar vazia.");
     }
 
-    const ram = Number(capacidadeRam);
+    const ram = capacidadeRam;
     if (isNaN(ram) || ram < 8) {
-    throw new Error("RAM mínima é 8GB.");
+      throw new Error("RAM mínima é 8GB.");
     }
-    const novoAtivo = new EquipamentoModel(
-    String(tagPatrimonio).trim(),
-    tipoEquipamento,ram);
-    EquipamentoModel.#bancoFalso.push(novoAtivo);
+    const novoAtivo = new EquipamentoModel(tagPatrimonio, tipoEquipamento, capacidadeRam);
+    this.bancoFalso.push(novoAtivo);
     return novoAtivo;
   }
-  static listarInventario() {
-  return [...EquipamentoModel.#bancoFalso];
+  listarInventario() {
+    console.log(this.bancoFalso);
   }
 }
