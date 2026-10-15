@@ -1,6 +1,10 @@
 import * as readline from 'node:readline/promises';
 import { stdin as input, stdout as output } from 'node:process';
 import { AuditoriaController } from './controllers/AuditoriaController.js';
+import { EquipamentoController } from './controllers/EquipamentoController.js';
+import { TecnicoController } from './controllers/TecnicoController.js';
+import { EquipamentoModel } from './models/EquipamentoModel.js';
+import { TecnicoModel } from './models/TecnicoModel.js';
 
 const rl = readline.createInterface({ input, output });
 IniciarSistema();
@@ -21,23 +25,29 @@ async function IniciarSistema() {
         switch (opcao){
 
             case 1:
+                const equipamento = new EquipamentoController();
                 const tagPatrimonio = parseInt(await rl.question("Insira a Tag de Patrimônio: "));
                 const tipoEquipamento = await rl.question("Insira o Tipo do Equipamento: ");
                 const capacidadeRAM = parseInt(await rl.question("Insira a capacidade da Memória RAM [em GBs]: "));
+                equipamento.processarEntradaEquipamento(tagPatrimonio, tipoEquipamento, capacidadeRAM);
                 break;
 
             case 2:
-                listarInventario();
+                const listaa = new EquipamentoModel();
+                listaa.listarInventario();
                 break;
 
             case 3:
+                const tecnico = new TecnicoController();
                 const nomeCompleto = await rl.question("Insira o Nome do Funcionário: ");
                 const credencialAcesso = parseInt(await rl.question("Insira o Número da Credencial: "));
                 const turno = await rl.question("Insira o Turno de Trabalho [Manhã, Tarde ou Noite]: ");
+                tecnico.processarAdmissao(nomeCompleto, credencialAcesso, turno);
                 break;
 
             case 4:
-                listarEquipe();
+                const listab = new TecnicoModel();
+                listab.listarEquipe();
                 break;
 
             case 5:

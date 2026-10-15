@@ -1,10 +1,11 @@
-import { TecnicoModel } from "/models/TecnicoModel.js";
+import { TecnicoModel } from "../models/TecnicoModel.js";
 
 export class TecnicoController {
-    processarAdmissao() {
+    processarAdmissao(nomeCompleto, credencialAcesso, turnoTrabalho) {
         try{
             console.log("Processando admissão de técnico...");
-            TecnicoModel.contratarTecnico(nomeCompleto, credencialAcesso, turnoTrabalho);
+            const tecnico = new TecnicoModel(nomeCompleto, credencialAcesso, turnoTrabalho);
+            tecnico.contratarTecnico(nomeCompleto, credencialAcesso, turnoTrabalho);
             console.log("Técnico admitido com sucesso!");
         } catch (erro) {
             console.error("Erro ao admitir técnico:", erro.message);
