@@ -13,13 +13,20 @@ static #bancoFalso = [];
   throw new Error("A Tag de Patrimônio não pode ficar vazia.");
     }
 
+    if (tipoEquipamento === "Desktop" && tipoEquipamento === "Notebook" && tipoEquipamento === "Servidor"
+    ) {
+      throw new Error("Tipo inválido. Use: Desktop, Notebook ou Servidor.");
+    }
+
     const ram = Number(capacidadeRam);
     if (isNaN(ram) || ram < 8) {
     throw new Error("RAM mínima é 8GB.");
     }
+
     const novoAtivo = new EquipamentoModel(
     String(tagPatrimonio).trim(),
     tipoEquipamento,ram);
+
     EquipamentoModel.#bancoFalso.push(novoAtivo);
     return novoAtivo;
   }
