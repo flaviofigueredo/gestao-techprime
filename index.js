@@ -33,10 +33,8 @@ async function IniciarSistema() {
                 break;
 
             case 2:
-                const listaa = new EquipamentoModel();
-                listaa.listarInventario();
+                console.log(EquipamentoModel.listarInventario());
                 break;
-
             case 3:
                 const tecnico = new TecnicoController();
                 const nomeCompleto = await rl.question("Insira o Nome do Funcionário: ");

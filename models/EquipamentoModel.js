@@ -1,6 +1,6 @@
 export class EquipamentoModel {
 
-  bancoFalso = [];
+  static #bancoFalso = [];
 
   constructor(tagPatrimonio, tipoEquipamento, capacidadeRam) {
   this.tagPatrimonio = tagPatrimonio;
@@ -18,10 +18,10 @@ export class EquipamentoModel {
       throw new Error("RAM mínima é 8GB.");
     }
     const novoAtivo = new EquipamentoModel(tagPatrimonio, tipoEquipamento, capacidadeRam);
-    this.bancoFalso.push(novoAtivo);
+    EquipamentoModel.#bancoFalso.push(novoAtivo);
     return novoAtivo;
   }
-  listarInventario() {
-    console.log(this.bancoFalso);
+  static listarInventario() {
+    console.log(EquipamentoModel.#bancoFalso);
   }
 }
