@@ -44,8 +44,7 @@ async function IniciarSistema() {
                 break;
 
             case 4:
-                const listab = new TecnicoModel();
-                listab.listarEquipe();
+                console.log(TecnicoModel.listarEquipe());
                 break;
 
             case 5:

@@ -13,7 +13,7 @@ export class TecnicoModel {
 
     
 
-    contratarTecnico(nomeCompleto, credencialAcesso, turnoTrabalho){
+    static contratarTecnico(nomeCompleto, credencialAcesso, turnoTrabalho){
         if (credencialAcesso === null || credencialAcesso === undefined || !credencialAcesso) {
             throw new Error("ERR_CREDENCIAL_VAZIA");
         }
@@ -35,8 +35,9 @@ export class TecnicoModel {
         
         const tecnico = new TecnicoModel(nomeCompleto, credencialAcesso, turnoTrabalho);
         TecnicoModel.#tecnico.push(tecnico);
+        return tecnico;
 }
     static listarEquipe(){
-        console.log(TecnicoModel.#tecnico);
+        return TecnicoModel.#tecnico;
     }
 }
