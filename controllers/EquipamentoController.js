@@ -1,31 +1,25 @@
 import { EquipamentoModel } from "../models/EquipamentoModel.js";
 
 export class EquipamentoController{
-    static processarEntradaEquipamento(tagPatrimonio, tipoEquipamento, capacidadeRam) {
+    processarEntradaEquipamento(tagPatrimonio, tipoEquipamento, capacidadeRam) {
     try {
-    const ativo = EquipamentoModel.registrarAtivo(
-    tagPatrimonio, tipoEquipamento, capacidadeRam
-);
-return {
-status: 201,
-mensagem: "Equipamento cadastrado com sucesso!",
-dados: ativo,
-};
-} 
-catch (erro) {
-return {
-status: 400,
-mensagem: "Falha ao cadastrar equipamento.",
-erro: erro.message,
-};
+      const ativo = new EquipamentoModel(tagPatrimonio, tipoEquipamento, capacidadeRam);
+      ativo.registrarAtivo(tagPatrimonio, tipoEquipamento, capacidadeRam);
+      console.log('[STATUS]: 201 | Equipamento cadastrado com sucesso! | ATIVO');
+    } 
+    catch (erro) {
+
+      console.log('[STATUS]: 400 | Falha ao cadastrar equipamento. | ERRO');
+
+    } finally {
+
+      console.log("🔒 Operação encerrada com segurança.");
+
+    }
 }
-}
-static consultarCatalogo() {
-const consultar = EquipamentoModel.listarconsultar();
-return {
-    status: 200,
-    total: consultar.length,
-    dados:consultar,
-    };
+
+  consultarCatalogo() {
+    const consultar = EquipamentoModel.listarconsultar();
+    console.log(`[STATUS]: 200 | TOTAL: ${consultar.length} | DADOS: ${consultar}`);
   }
 }
