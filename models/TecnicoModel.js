@@ -1,6 +1,6 @@
 export class TecnicoModel {
     #credencial;
-    tecnico = [];
+    static #tecnico = [];
 
     constructor(nomeCompleto, credencialAcesso, turnoTrabalho){
         this.#credencial = credencialAcesso;
@@ -34,9 +34,9 @@ export class TecnicoModel {
         }   
         
         const tecnico = new TecnicoModel(nomeCompleto, credencialAcesso, turnoTrabalho);
-        this.tecnico.push(tecnico);
+        TecnicoModel.#tecnico.push(tecnico);
 }
-    listarEquipe(){
-        console.log(this.tecnico);
+    static listarEquipe(){
+        console.log(TecnicoModel.#tecnico);
     }
 }
