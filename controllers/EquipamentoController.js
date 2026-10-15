@@ -3,8 +3,7 @@ import { EquipamentoModel } from "../models/EquipamentoModel.js";
 export class EquipamentoController{
     processarEntradaEquipamento(tagPatrimonio, tipoEquipamento, capacidadeRam) {
     try {
-      const ativo = new EquipamentoModel(tagPatrimonio, tipoEquipamento, capacidadeRam);
-      ativo.registrarAtivo(tagPatrimonio, tipoEquipamento, capacidadeRam);
+      EquipamentoModel.registrarAtivo(tagPatrimonio, tipoEquipamento, capacidadeRam);
       console.log('[STATUS]: 201 | Equipamento cadastrado com sucesso! | ATIVO');
     } 
     catch (erro) {
@@ -19,7 +18,7 @@ export class EquipamentoController{
 }
 
   consultarCatalogo() {
-    const consultar = EquipamentoModel.listarconsultar();
+    const consultar = EquipamentoModel.listarInventario();
     console.log(`[STATUS]: 200 | TOTAL: ${consultar.length} | DADOS: ${consultar}`);
   }
 }

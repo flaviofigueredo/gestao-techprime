@@ -5,11 +5,10 @@ export class AuditoriaController {
     listafinal = [];
 
     gerarRelatorioGeral(){
-        const listafirst = new EquipamentoModel();
-        const listasecond = new TecnicoModel();
-        const listaitens = listafirst.listarInventario();
-        const listapersons = listasecond.listarEquipe();
+        const listaitens = EquipamentoModel.listarInventario();
+        const listapersons = TecnicoModel.listarEquipe();
         this.listafinal.push(listaitens, listapersons);
+        console.log(this.listafinal);
         return this.listafinal;
     }
 }

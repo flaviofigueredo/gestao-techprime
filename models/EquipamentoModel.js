@@ -8,7 +8,7 @@ export class EquipamentoModel {
   this.capacidadeRam = capacidadeRam;
   }
 
-  registrarAtivo(tagPatrimonio, tipoEquipamento, capacidadeRam) {
+  static registrarAtivo(tagPatrimonio, tipoEquipamento, capacidadeRam) {
     if (tagPatrimonio === "") {
       throw new Error("A Tag de Patrimônio não pode ficar vazia.");
     }
@@ -31,6 +31,6 @@ export class EquipamentoModel {
     return novoAtivo;
   }
   static listarInventario() {
-    console.log(EquipamentoModel.#bancoFalso);
+    return EquipamentoModel.#bancoFalso;
   }
 }
