@@ -1,43 +1,39 @@
 export class TecnicoModel {
     #credencial;
-    static #tecnico = [];
+    static #bancoFalso = [];
 
     constructor(nomeCompleto, credencialAcesso, turnoTrabalho){
         this.#credencial = credencialAcesso;
         this.nomeCompleto = nomeCompleto;
         this.turnoTrabalho = turnoTrabalho;
-    }
-    get credencialAcesso(){
-        return this.#credencial;
-    }
+    }  
 
+    static contratarTecnico(nomeCompleto, credencialAcesso, turnoTrabalho) {
     
+    const credencial = String(credencialAcesso ?? "").trim();
+    if (credencial === "") {
+      throw new Error("A Credencial de Acesso não pode ficar vazia.");
+    }
+    if (!/^\d+$/.test(credencial)) {
+      throw new Error("A Credencial de Acesso deve conter apenas números.");
+    }
 
-    static contratarTecnico(nomeCompleto, credencialAcesso, turnoTrabalho){
-        if (credencialAcesso === null || credencialAcesso === undefined || !credencialAcesso) {
-            throw new Error("ERR_CREDENCIAL_VAZIA");
-        }
-        if (nomeCompleto === null || nomeCompleto === undefined || !nomeCompleto) {
-            throw new Error("ERR_NOME_VAZIO");
-        }
-        if (turnoTrabalho === null || turnoTrabalho === undefined || !turnoTrabalho) {
-            throw new Error("ERR_TURNO_VAZIO");
-        }
-        if (typeof credencialAcesso !== "number" || isNaN(credencialAcesso) || credencialAcesso < 0) {
-            throw new Error("ERR_CREDENCIAL_INVALIDA");
-        }
-        if (typeof nomeCompleto !== "string") {
-            throw new Error("ERR_NOME_INVALIDO");
-        }
-        if (turnoTrabalho !== "Manhã" && turnoTrabalho !== "Tarde" && turnoTrabalho !== "Noite") {
-            throw new Error("ERR_TURNO_INVALIDO");
-        }   
-        
-        const tecnico = new TecnicoModel(nomeCompleto, credencialAcesso, turnoTrabalho);
-        TecnicoModel.#tecnico.push(tecnico);
-        return tecnico;
-}
+    const nome = String(nomeCompleto ?? "").trim();
+    if (nome === "") {
+      throw new Error("O Nome Completo não pode ficar vazio.");
+    }
+
+    const TURNOS_VALIDOS = ["Manhã", "Tarde", "Noite"];
+    if (!TURNOS_VALIDOS.includes(turnoTrabalho)) {
+      throw new Error('Turno inválido. Use "Manhã", "Tarde" ou "Noite".');
+    }
+
+    const tecnico = new TecnicoModel(nome, credencial, turnoTrabalho);
+    TecnicoModel.#bancoFalso.push(tecnico);
+    return tecnico;
+    }
+
     static listarEquipe(){
-        return TecnicoModel.#tecnico;
+        return [...TecnicoModel.#bancoFalso];
     }
 }

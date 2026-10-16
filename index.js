@@ -7,7 +7,12 @@ import { EquipamentoModel } from './models/EquipamentoModel.js';
 import { TecnicoModel } from './models/TecnicoModel.js';
 
 const rl = readline.createInterface({ input, output });
-IniciarSistema();
+
+const equipamentoController = new EquipamentoController();
+const tecnicoController = new TecnicoController();
+const auditoriaController = new AuditoriaController();
+
+const exibir = (resposta) => console.log(JSON.stringify(resposta, null, 2));
 
 async function IniciarSistema() {
     let sistemaRodando = true;
@@ -25,35 +30,33 @@ async function IniciarSistema() {
         switch (opcao){
 
             case 1:
-                const equipamento = new EquipamentoController();
-                const tagPatrimonio = parseInt(await rl.question("Insira a Tag de Patrimônio: "));
-                const tipoEquipamento = await rl.question("Insira o Tipo do Equipamento: ");
-                const capacidadeRAM = parseInt(await rl.question("Insira a capacidade da Memória RAM [em GBs]: "));
-                equipamento.processarEntradaEquipamento(tagPatrimonio, tipoEquipamento, capacidadeRAM);
+                const tag = await rl.question("Insira a Tag de Patrimônio: ");
+                const tipo = await rl.question("Insira o Tipo do Equipamento [Desktop, Notebook ou Servidor]: ");
+                const ram = await rl.question("Insira a capacidade da Memória RAM [em GBs]: ");
+                exibir(equipamentoController.processarEntradaEquipamento(tag, tipo.trim(), ram));
                 break;
 
             case 2:
-                console.log(EquipamentoModel.listarInventario());
+                exibir(equipamentoController.consultarCatalogo());
                 break;
             case 3:
-                const tecnico = new TecnicoController();
-                const nomeCompleto = await rl.question("Insira o Nome do Funcionário: ");
-                const credencialAcesso = parseInt(await rl.question("Insira o Número da Credencial: "));
+                const nome = await rl.question("Insira o Nome Completo do Técnico: ");
+                const credencial = await rl.question("Insira a Credencial de Acesso (crachá): ");
                 const turno = await rl.question("Insira o Turno de Trabalho [Manhã, Tarde ou Noite]: ");
-                tecnico.processarAdmissao(nomeCompleto, credencialAcesso, turno);
+                exibir(tecnicoController.processarAdmissao(nome, credencial, turno.trim()));
                 break;
 
             case 4:
-                console.log(TecnicoModel.listarEquipe());
+                exibir(tecnicoController.consultarEquipe());
                 break;
 
             case 5:
-                const auditor = new AuditoriaController();
-                auditor.gerarRelatorioGeral();
+                exibir(auditoriaController.gerarRelatorioGeral());
                 break;
             
             case 0:
                 sistemaRodando = false;
+                console.log("Encerrando o sistema. Até logo!");
                 break;
 
             default:
@@ -64,3 +67,5 @@ async function IniciarSistema() {
 
     rl.close();
 }
+
+IniciarSistema();
