@@ -2,13 +2,20 @@ import { EquipamentoModel } from '../models/EquipamentoModel.js'
 import { TecnicoModel } from '../models/TecnicoModel.js'
 
 export class AuditoriaController {
-    listafinal = [];
+    
+    gerarRelatorioGeral() {
+    const equipamentos = EquipamentoModel.listarInventario();
+    const tecnicos = TecnicoModel.listarEquipe();
 
-    gerarRelatorioGeral(){
-        const listaitens = EquipamentoModel.listarInventario();
-        const listapersons = TecnicoModel.listarEquipe();
-        this.listafinal.push(listaitens, listapersons);
-        console.log(this.listafinal);
-        return this.listafinal;
-    }
+    return {
+      status: 200,
+      titulo: "Relatório de Auditoria Geral",
+      totais: {
+        equipamentos: equipamentos.length,
+        tecnicos: tecnicos.length
+      },
+      equipamentos,
+      tecnicos
+    };
+  }
 }

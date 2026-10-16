@@ -9,28 +9,30 @@ export class EquipamentoModel {
   }
 
   static registrarAtivo(tagPatrimonio, tipoEquipamento, capacidadeRam) {
-    if (tagPatrimonio === "") {
+    const tag = String(tagPatrimonio ?? "").trim();
+    if (tag === "") {
       throw new Error("A Tag de Patrimônio não pode ficar vazia.");
     }
 
-    if (tipoEquipamento === "Desktop" && tipoEquipamento === "Notebook" && tipoEquipamento === "Servidor"
-    ) {
+    const TIPOS_VALIDOS = ["Desktop", "Notebook", "Servidor"];
+    if (!TIPOS_VALIDOS.includes(tipoEquipamento)) {
       throw new Error("Tipo inválido. Use: Desktop, Notebook ou Servidor.");
     }
 
     const ram = Number(capacidadeRam);
-    if (isNaN(ram) || ram < 8) {
+    if (!Number.isFinite(ram)) {
+      throw new Error("A capacidade de RAM deve ser um número.");
+    }
+    if (ram < 8) {
       throw new Error("RAM mínima é 8GB.");
     }
 
-    const novoAtivo = new EquipamentoModel(
-    String(tagPatrimonio).trim(),
-    tipoEquipamento,ram);
-
+    const novoAtivo = new EquipamentoModel(tag, tipoEquipamento, ram);
     EquipamentoModel.#bancoFalso.push(novoAtivo);
     return novoAtivo;
   }
+
   static listarInventario() {
-    return EquipamentoModel.#bancoFalso;
+    return [...EquipamentoModel.#bancoFalso];
   }
 }
